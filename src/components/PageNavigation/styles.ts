@@ -8,9 +8,9 @@ export const PageNavigationContainer = styled.div`
     margin: 1.2rem 0;
 `
 
-export const NavigationButton = styled.div`
+export const NavigationButton = styled.div<{active?: boolean}>`
     margin: .25rem;
-    background: ${({theme}) => theme.colors.white};
+    background: ${({active}) => active ? ({theme}) => theme.colors.purple : ({theme}) => theme.colors.white};
     width: 2rem;
     height: 2rem;
     padding: 1.35rem;
@@ -23,8 +23,8 @@ export const NavigationButton = styled.div`
 
 `
 
-export const PageLabel = styled.p`
-    color: ${({theme}) => theme.colors.purple};
+export const PageLabel = styled.p<{active?: boolean}>`
+    color: ${({active}) => active ? ({theme}) => theme.colors.white : ({theme}) => theme.colors.purple};
     font-weight: 800;
     font-size: 1.2rem;
 `

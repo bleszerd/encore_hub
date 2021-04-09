@@ -1,29 +1,68 @@
-import { useEffect, useState } from 'react'
+import { IPageNavigationProps, IPageNavigationItem } from '../../typescript/database'
+import { useRouter } from 'next/router'
 import * as S from './styles'
+import { useEffect, useState } from 'react'
 
-const pages = {
-    count: 3,
-}
+export default function PageNavigation(pageData: IPageNavigationProps) {
+    const [pagesArray, setPagesArray] = useState<IPageNavigationItem[]>([])
+    const { push } = useRouter()
 
-export default function PageNavigation() {
-    const [page, setPage] = useState([] as number[])
+    let { page: actPage, totalPages } = pageData
 
     useEffect(() => {
-        const allPages = []
-        for (let p = 1; p < pages.count + 1; p++) {
-            allPages.push(p)
+        const pagesIterator: IPageNavigationItem[] = []
+
+        if (actPage > totalPages) {
+            push(`/`)
         }
 
-        setPage(allPages)
-    }, [])
+
+        for (let i = actPage - 2; i < actPage + 3; i++) {
+
+            if (i <= 0 || i > totalPages) {
+                continue
+            }
+
+            if (i == actPage) {
+                pagesIterator.push({
+                    label: i,
+                    url: `?page=${i}`,
+                    active: true
+                })
+
+                continue
+            }
+
+            pagesIterator.push({
+                label: i,
+                url: `?page=${i}`
+            })
+        }
+
+        setPagesArray(pagesIterator)
+    }, [actPage])
+
+    function handlePage(urlToGo: string) {
+        push(urlToGo)
+    }
 
     return (
         <S.PageNavigationContainer>
-            {page.length > 0 && page.map(pg => (
-                <S.NavigationButton>
-                    <S.PageLabel>{pg}</S.PageLabel>
-                </S.NavigationButton>
-            ))}
+            <S.NavigationButton onClick={() => handlePage('?page=1')}>
+                <S.PageLabel>F</S.PageLabel>
+            </S.NavigationButton>
+            {
+                pagesArray.map(pgb => {
+                    return (
+                        <S.NavigationButton onClick={() => handlePage(pgb.url)} active={pgb.active}>
+                            <S.PageLabel active={pgb.active}>{pgb.label}</S.PageLabel>
+                        </S.NavigationButton>
+                    )
+                })
+            }
+            <S.NavigationButton onClick={() => handlePage(`?page=${totalPages}`)}>
+                <S.PageLabel>L</S.PageLabel>
+            </S.NavigationButton>
         </S.PageNavigationContainer>
     )
 }
