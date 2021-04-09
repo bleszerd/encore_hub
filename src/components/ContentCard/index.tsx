@@ -10,7 +10,7 @@ export default function ContentCard({ author, date, title, image, slug }: Conten
     }
 
     return (
-        <S.ContentCardContainer onClick={navigateToPostPage}>
+        <S.ContentCardContainer onClick={navigateToPostPage} key={slug}>
             <S.Image src={image}>
                 <S.ImageEffect>
                     <S.CardDetails>

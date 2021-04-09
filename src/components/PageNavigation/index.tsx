@@ -1,29 +1,31 @@
-import { useEffect, useState } from 'react'
+import { IPageNavigationProps } from '../../typescript/database'
+import { useRouter } from 'next/router'
 import * as S from './styles'
 
-const pages = {
-    count: 3,
-}
+export default function PageNavigation(pageData: IPageNavigationProps) {
+    const { push } = useRouter()
 
-export default function PageNavigation() {
-    const [page, setPage] = useState([] as number[])
+    const { hasNextPage, hasPrevPage, page: actPage, totalPages, totalDocs, nextPage } = pageData || null
 
-    useEffect(() => {
-        const allPages = []
-        for (let p = 1; p < pages.count + 1; p++) {
-            allPages.push(p)
-        }
-
-        setPage(allPages)
-    }, [])
+    function handlePage(pageToGo: number) {
+        push(`?page=${pageToGo}`)
+    }
 
     return (
         <S.PageNavigationContainer>
-            {page.length > 0 && page.map(pg => (
-                <S.NavigationButton>
-                    <S.PageLabel>{pg}</S.PageLabel>
+            {hasPrevPage && (
+                <S.NavigationButton onClick={() => handlePage(actPage - 1)}>
+                    <S.PageLabel>{actPage - 1}</S.PageLabel>
                 </S.NavigationButton>
-            ))}
+            )}
+            <S.NavigationButton active onClick={() => handlePage(actPage)}>
+                <S.PageLabel active>{actPage}</S.PageLabel>
+            </S.NavigationButton>
+            {!!nextPage && (
+                <S.NavigationButton onClick={() => handlePage(nextPage)}>
+                    <S.PageLabel>{nextPage}</S.PageLabel>
+                </S.NavigationButton>
+            )}
         </S.PageNavigationContainer>
     )
 }
