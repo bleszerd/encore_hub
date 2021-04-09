@@ -29,6 +29,7 @@ export interface ContentCard {
     image: string
     author: string
     date: string
+    slug: string
 }
 
 export interface SImageProps {

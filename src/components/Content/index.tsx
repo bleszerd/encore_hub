@@ -1,64 +1,8 @@
+import { IContentProps } from '../../typescript/database'
 import ContentCard from '../ContentCard'
 import * as S from './styles'
 
-const contentData = [
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    },
-    {
-        title: "Como criar um blog utilizando NextJS",
-        image: "https://www.originofscience.com/wp-content/uploads/2020/06/chem.jpg",
-        author: "Vinícius Resende",
-        date: "01/04/2021",
-    }
-]
-
-export default function Content() {
+export default function Content({contentData}: IContentProps) {
     return (
         <S.ContentConatainer>
             {
@@ -68,6 +12,7 @@ export default function Content() {
                         date={ctt.date}
                         image={ctt.image}
                         title={ctt.title}
+                        slug={ctt.slug}
                     />
                 ))
             }

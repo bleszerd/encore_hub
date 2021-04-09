@@ -1,17 +1,25 @@
 import mongoose from 'mongoose'
 
-const mongoConnectionUri = process.env.MONGO_URI
+async function dbConnect() {
+    try {
+        const mongoUri = process.env.MONGODB_URI
 
-if(!mongoConnectionUri)
-    throw new Error('You need to provide a MONGO_URI as your environment variable.')
+        if(!mongoUri)
+            throw new Error("You need to provide a MONGODB_URI as your environment variable.")
 
+        if (mongoose.connection.readyState >= 1)
+            return
+            
 
-const dbConnection = mongoose.connect(mongoConnectionUri, (err)=>{
-    if(err)
-        console.error(err)
+        return await mongoose.connect(mongoUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
 
-    console.log(`[MongoDB] Database Connected`);
-    
-})
+const database = dbConnect()
 
-export default dbConnection
+export default database

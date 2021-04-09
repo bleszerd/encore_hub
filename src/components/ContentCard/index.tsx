@@ -2,11 +2,11 @@ import { useRouter } from 'next/router'
 import { ContentCardProps } from '../../typescript/types'
 import * as S from './styles'
 
-export default function ContentCard({ author, date, title, image }: ContentCardProps) {
+export default function ContentCard({ author, date, title, image, slug }: ContentCardProps) {
     const router = useRouter()
 
     function navigateToPostPage(){
-        router.push(`/post/${title}`)
+        router.push(`/posts/${slug}`)
     }
 
     return (
