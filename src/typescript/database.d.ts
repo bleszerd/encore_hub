@@ -31,5 +31,6 @@ export interface IHomeProps {
 
 export interface IPageNavigationItem {
     url: string
-    text: string | number
+    label: number
+    active?: boolean
 }

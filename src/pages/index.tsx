@@ -36,7 +36,7 @@ export const getServerSideProps = async ({query} : GetServerSidePropsContext) =>
   const postData = response.data.result.docs;
 
   const { hasPrevPage, hasNextPage, totalPages, page, nextPage, totalDocs } = response.data.result
-
+  
   const pageData = {
     hasPrevPage,
     hasNextPage,
