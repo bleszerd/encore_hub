@@ -28,3 +28,16 @@ export const PageLabel = styled.p<{active?: boolean}>`
     font-weight: 800;
     font-size: 1.2rem;
 `
+
+export const PageIcon = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    color: ${({theme}) => theme.colors.purple};
+`
+
+export const NextBackAllTruestContainer = styled.div`
+    margin: 0 2rem;
+    display: flex;
+`

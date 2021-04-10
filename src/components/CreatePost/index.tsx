@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as S from './styles'
-import { parseToMarkdown } from '../../utils/markdown'
 import PostSection from '../PostContainer'
+import API from '../../services/API'
 
 export default function CreatePost() {
-    const [tags, setTags] = useState([{ label: '' }])
+    const [tags, setTags] = useState([''])
     const [tagStr, setTagStr] = useState('')
     const [postStr, setPostStr] = useState('')
     const [img, setImg] = useState('')
@@ -17,11 +17,25 @@ export default function CreatePost() {
         setTagStr(unisplitedString)
 
         if (unisplitedString.indexOf(";") != -1) {
-            setTags([...tags, {
-                label: unisplitedString.slice(0, unisplitedString.length - 1),
-            }])
+            setTags([...tags, unisplitedString.slice(0, unisplitedString.length - 1)])
             setTagStr('')
         }
+    }
+
+    async function createPost(e: any){
+        e.preventDefault()
+
+        const response = await API.post(`/posts/create`, {
+            title,
+            tags,
+            author: "Vinícius Resende",
+            content: postStr,
+            date: new Date().toUTCString(),
+            image: img,
+            slug: title.replaceAll(" ", "_")
+        })
+
+        console.log(response);
     }
 
     return (
@@ -33,7 +47,7 @@ export default function CreatePost() {
             <S.TagSection>
                 {
                     tags.map(tag => (
-                        <S.TagLabel key="tag" placeholder="TAG" value={tag.label || tagStr} onChange={e => handleAndParseTags(e)} />
+                        <S.TagLabel key="tag" placeholder="TAG" value={tag || tagStr} onChange={e => handleAndParseTags(e)} />
                     ))
                 }
             </S.TagSection>
@@ -56,7 +70,7 @@ export default function CreatePost() {
                     <S.PublishChannelOption value="producao">Produção</S.PublishChannelOption>
                     <S.PublishChannelOption value="desenvolvimento">Desenvolvimento</S.PublishChannelOption>
                 </S.ChannelSelector>
-                <S.PublishButton>Enviar</S.PublishButton>
+                <S.PublishButton onClick={e => createPost(e)}>Enviar</S.PublishButton>
             </S.PublishChannelContainer>
 
         </S.CreatePostContainer>

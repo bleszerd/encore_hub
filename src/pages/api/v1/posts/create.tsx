@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             throw new Error("Method not allowed!")
         }
 
-        const { title, author, content, date, image, slug } = req.body
+        const { title, author, content, date, image, slug, tags } = req.body
 
         if(!title || !author || !content || !date || !image || !slug){
             throw new Error("You must to include all required paramns!")
@@ -17,6 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await Post.create({
             title,
             slug,
+            tags,
             author,
             content,
             date,
