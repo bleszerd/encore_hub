@@ -1,15 +1,15 @@
-import { ReactEventHandler, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as S from './styles'
-
+import { parseToMarkdown } from '../../utils/markdown'
+import PostSection from '../PostContainer'
 
 export default function CreatePost() {
-    const [tags, setTags] = useState([{ label: '', id: 1 }])
-    const [tagCount, setTagCount] = useState(1)
+    const [tags, setTags] = useState([{ label: '' }])
     const [tagStr, setTagStr] = useState('')
+    const [postStr, setPostStr] = useState('')
+    const [img, setImg] = useState('')
+    const [title, setTitle] = useState('')
 
-    useEffect(() => {
-        setTagCount(tagCount + 1)
-    }, [tags])
 
     function handleAndParseTags(e: any) {
         const unisplitedString: string = e.target.value
@@ -19,7 +19,6 @@ export default function CreatePost() {
         if (unisplitedString.indexOf(";") != -1) {
             setTags([...tags, {
                 label: unisplitedString.slice(0, unisplitedString.length - 1),
-                id: tagCount
             }])
             setTagStr('')
         }
@@ -27,7 +26,10 @@ export default function CreatePost() {
 
     return (
         <S.CreatePostContainer>
-            <S.TitleInput placeholder="Título da publicação" />
+            <S.TitleImageContainer>
+                <S.TitleInput placeholder="Título da publicação" onChange={e => setTitle(e.target.value)} />
+                <S.TitleInput placeholder="Url da imagem" onChange={e => setImg(e.target.value)} />
+            </S.TitleImageContainer>
             <S.TagSection>
                 {
                     tags.map(tag => (
@@ -35,6 +37,28 @@ export default function CreatePost() {
                     ))
                 }
             </S.TagSection>
+
+            <S.PostTextInput placeholder="Publicação com markdown" onChange={e => setPostStr(e.target.value)} />
+
+            <S.PostPreview>
+                <PostSection
+                    author="Vinícius Resende"
+                    content={postStr}
+                    date={new Date().toUTCString()}
+                    image={img}
+                    title={title}
+                />
+            </S.PostPreview>
+
+            <S.PublishChannelContainer>
+                <S.ChannelSelector>
+                    <S.PublishChannelOption value="" hidden>Selecionar canal</S.PublishChannelOption>
+                    <S.PublishChannelOption value="producao">Produção</S.PublishChannelOption>
+                    <S.PublishChannelOption value="desenvolvimento">Desenvolvimento</S.PublishChannelOption>
+                </S.ChannelSelector>
+                <S.PublishButton>Enviar</S.PublishButton>
+            </S.PublishChannelContainer>
+
         </S.CreatePostContainer>
     )
 }

@@ -10,7 +10,7 @@ export default function PostSection({ author, date, image, title, content }: Pos
         const markdownParsed = parseToMarkdown(content)
 
         setPostContent(markdownParsed)
-    }, [])
+    }, [content])
 
     return (
         <S.PostContainer>
