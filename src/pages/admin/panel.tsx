@@ -1,12 +1,12 @@
 import AppWrapper from "../../components/AppWrapper";
+import AdminPanel from "../../components/AdminPanel";
 import Header from "../../components/Header";
-import LoginForm from "../../components/LoginForm";
 
-export default function Login(){
+export default function Panel(){
     return (
         <AppWrapper>
             <Header />
-            <LoginForm />
+            <AdminPanel />
         </AppWrapper>
     )
 }
