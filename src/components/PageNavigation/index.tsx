@@ -44,8 +44,11 @@ export default function PageNavigation(pageData: IPageNavigationProps) {
         push(urlToGo)
     }
 
-    if(actPage == 0 ){
-        return <S.PageNavigationContainer></S.PageNavigationContainer>
+    console.log(totalPages);
+    
+
+    if(totalPages == 0){
+        return <div style={{height: '10rem', width: '1px'}}></div>
     }
 
     return (
