@@ -45,7 +45,7 @@ export default function PageNavigation(pageData: IPageNavigationProps) {
     }
 
     if(actPage == 0 ){
-        return <></>
+        return <S.PageNavigationContainer></S.PageNavigationContainer>
     }
 
     return (
