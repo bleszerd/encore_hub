@@ -44,6 +44,10 @@ export default function PageNavigation(pageData: IPageNavigationProps) {
         push(urlToGo)
     }
 
+    if(actPage == 0 ){
+        return <></>
+    }
+
     return (
         <S.PageNavigationContainer>
             <S.NextBackAllTruestContainer>
