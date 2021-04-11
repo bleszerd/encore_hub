@@ -52,7 +52,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     const slug = params.slug
 
     const response = await API.get(`/posts/${slug}`)
-    const postData = response.data.result;
+    const postData = response.data.result || null;
 
     return {
         props: {

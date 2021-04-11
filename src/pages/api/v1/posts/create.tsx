@@ -4,13 +4,14 @@ import '../../../../database/connection'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+
         if (req.method != 'POST') {
             throw new Error("Method not allowed!")
         }
 
         const { title, author, content, date, image, slug, tags } = req.body
 
-        if(!title || !author || !content || !date || !image || !slug){
+        if (!title || !author || !content || !date || !image || !slug) {
             throw new Error("You must to include all required paramns!")
         }
 

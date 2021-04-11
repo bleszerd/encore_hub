@@ -10,6 +10,7 @@
   "dependencies": {
     "apollo-server-micro": "^2.22.2",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "graphql": "^15.5.0",
     "micro": "^9.3.4",
     "mongoose": "^5.12.2",

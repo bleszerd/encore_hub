@@ -1,9 +1,13 @@
 import axios from 'axios'
 
-const baseURL = process.env.BASE_API_URL || "https://encore-bleszerd.vercel.app/api/v1/"
+const baseURL = process.env.BASE_API_URL
+
+if(!baseURL){
+    throw new Error("You need to provide a BASE_API_URL as your environment variable.")
+}
 
 const API = axios.create({
-    baseURL
+    baseURL,
 })
 
 export default API
