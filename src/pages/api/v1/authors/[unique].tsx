@@ -21,10 +21,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             [queryFilter]: unique
         })
 
+        const respDoc = {...response._doc}
+
+        const resp = {...respDoc, password: "**SECRET**", createdAt: "**SECRET**", updatedAt: "**SECRET**", invite: "**SECRET**"}
+
         res.json({
             type: 'Response',
             message: 'Author Recovered!',
-            result: response
+            result: resp
         })
 
     } catch (err) {

@@ -8,14 +8,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             throw new Error("Method not allowed!")
         }
 
-        const { username, fullName, social, bio, fullText, birthday } = req.body
+        const { username, password, fullName, social, bio, fullText, birthday, invite } = req.body
 
-        if(!username || !fullName){
+        if(!username || !fullName || !password || !invite){
             throw new Error("You must to include all required paramns!")
+        }
+
+        if(invite != "convitesecreto"){
+            throw new Error("Invalid invite code")
+        }
+
+        const exist = await Author.findOne({
+            username
+        })
+
+        if(exist){
+            throw new Error(`${username} alread exists!`)
         }
 
         const response = await Author.create({
             username,
+            password,
+            invite,
             fullName,
             social,
             bio,
