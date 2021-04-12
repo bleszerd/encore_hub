@@ -8,9 +8,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             throw new Error("Method not allowed!")
         }
 
-        const { username, password, fullName, social, bio, fullText, birthday, invite } = req.body
+        const { username, password, fullName, social, bio, fullText, birthday, invite, photo } = req.body
 
-        if(!username || !fullName || !password || !invite){
+        if(!username || !fullName || !password || !invite || !photo){
             throw new Error("You must to include all required paramns!")
         }
 
@@ -29,6 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await Author.create({
             username,
             password,
+            photo,
             invite,
             fullName,
             social,

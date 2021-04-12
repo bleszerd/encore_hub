@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { DefaultTheme } from 'styled-components'
+import { IAuthor, IPost } from './database';
 
 /* ================= Styled Components ================= */
 declare module 'styled-components' {
@@ -60,4 +61,13 @@ export interface SAuthorImage {
 /* ================= Author Content ================= */
 export interface SAuthorContentImage {
     src: string
+}
+
+/* ================= Author Footer ================= */
+export type IAuthorFooterProps = IAuthor
+
+/* ================= Post View (page [slug]) ================= */
+export interface IPostProps {
+    postData: IPost
+    authorData: IAuthor
 }

@@ -7,8 +7,9 @@ import PostSection from '../../components/PostContainer'
 import API from '../../services/API'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { IPostProps } from '../../typescript/types'
 
-export default function Post({ postData }: any) {
+export default function Post({ postData, authorData }: IPostProps) {
     const { push } = useRouter()
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function Post({ postData }: any) {
                     <AppWrapper>
                         <Header />
                         <PostSection author={postData.author} image={postData.image} title={postData.title} date={postData.date} content={postData.content} />
-                        <AuthorFooter />
+                        <AuthorFooter bio={authorData.bio} birthday={authorData.birthday} fullName={authorData.fullName} photo={authorData.photo} username={authorData.username} social={authorData.social} __v={authorData.__v} _id={authorData._id} createdAt={authorData.createdAt} fullText={authorData.fullText} invite={authorData.invite} password={authorData.password} updatedAt={authorData.updatedAt} />
                         <Footer />
                     </AppWrapper>
                 )
@@ -54,9 +55,13 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     const response = await API.get(`/posts/${slug}`)
     const postData = response.data.result || null;
 
+    const authorResponse = await API.get(`/authors/${postData.author}`)
+    const authorData = authorResponse.data.result || null;
+
     return {
         props: {
-            postData
+            postData,
+            authorData
         }
     }
 }
