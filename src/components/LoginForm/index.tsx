@@ -1,49 +1,43 @@
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import API from '../../services/API'
+import jwt from 'jsonwebtoken'
+
 import * as S from './styles'
 
-export default function LoginForm() {
+import { MouseEvent } from 'react'
+import { LoginFormProps } from '../../typescript/types'
+
+export default function LoginForm({ fetchUserData }: LoginFormProps) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
-    const { push } = useRouter()
 
+    //Verify JWT token on local storage
     useEffect(() => {
-        const auth = sessionStorage.getItem("@auth")
-        
-        if (auth) {
-            push(`/admin/panel`)
+        const jwtStored = localStorage.getItem("@jwt")
+        const jwtKey = process.env.JWT_KEY
+
+        if (jwtStored && jwtKey && jwt.verify(jwtStored, jwtKey)) {
+            console.log("User logged!");
         }
     }, [])
 
-    async function handleLogin(event: any) {
-        event.preventDefault()
+    async function handleSignIn(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) {
+        e.preventDefault()
 
-        try {
-            const response = await API.post(`/auth`, {
-                username,
-                password
-            })
+        const authorizationBody = {
+            username,
+            password
+        }
 
-            const jwtNoSanitized: string = response.data.token
+        const authorizationResponse = await API.post(`/auth`, authorizationBody)
 
-            if (!jwtNoSanitized) {
-                throw new Error("User not valid!")
-            }
+        //On auth success...
+        if (authorizationResponse.data.token) {
+            const rawJwtTokenResponse: string = authorizationResponse.data.token
+            const jwt = rawJwtTokenResponse.split(" ")[1]
 
-            const jwtToken = jwtNoSanitized.split(' ')[1]
-
-            const jsonSession = {
-                username,
-                jwt: jwtToken
-            }
-
-            sessionStorage.setItem("@auth", JSON.stringify(jsonSession))
-
-            push(`/admin/panel`)
-        } catch (err) {
-            setError("Houve um erro, verifique as informações inseridas e tente novamente.")
+            localStorage.setItem("@jwt", jwt)
+            fetchUserData(username)
         }
     }
 
@@ -53,7 +47,7 @@ export default function LoginForm() {
             <S.FullWideInput placeholder="Identificação" onChange={e => setUsername(e.target.value)} />
             <S.MultipleColumnsDiv>
                 <S.FullWideInput placeholder="Senha" type="password" onChange={e => setPassword(e.target.value)} />
-                <S.ButtonLogin onClick={event => handleLogin(event)}>Entrar</S.ButtonLogin>
+                <S.ButtonLogin onClick={e => handleSignIn(e)}>Entrar</S.ButtonLogin>
             </S.MultipleColumnsDiv>
         </S.LoginFormContainer>
     )

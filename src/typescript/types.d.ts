@@ -71,3 +71,8 @@ export interface IPostProps {
     postData: IPost
     authorData: IAuthor
 }
+
+/* ================= Login Form ================= */
+export interface LoginFormProps {
+    fetchUserData: (authorUsername: string) => void 
+}

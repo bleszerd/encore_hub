@@ -8,48 +8,50 @@ import { IHomeProps } from '../typescript/database'
 import { GetServerSidePropsContext } from 'next'
 
 export default function Home({ postData, pageData }: IHomeProps) {
-  return (
-    <AppWrapper>
-      <Header />
-      <Content contentData={postData} />
-      <PageNavigation
-        hasNextPage={pageData.hasNextPage}
-        hasPrevPage={pageData.hasPrevPage}
-        nextPage={pageData.nextPage}
-        page={pageData.page}
-        totalPages={pageData.totalPages}
-        totalDocs={pageData.totalDocs}
-      />
-      <Footer />
-    </AppWrapper>
-  )
+	const { hasNextPage, hasPrevPage, nextPage, page, totalDocs, totalPages } = pageData
+
+	return (
+		<AppWrapper>
+			<Header />
+			<Content contentData={postData} />
+			<PageNavigation
+				hasNextPage={hasNextPage}
+				hasPrevPage={hasPrevPage}
+				nextPage={nextPage}
+				page={page}
+				totalPages={totalPages}
+				totalDocs={totalDocs}
+			/>
+			<Footer />
+		</AppWrapper>
+	)
 }
 
-export const getServerSideProps = async ({query} : GetServerSidePropsContext) => {
-  let {page: pageQuery} = query
+export const getServerSideProps = async ({ query }: GetServerSidePropsContext) => {
+	let { pg } = query
 
-  if(!pageQuery){
-    pageQuery = '1'
-  }
-  
-  const response = await API.get(`/posts?page=${pageQuery}`)
-  const postData = response.data.result.docs;
+	if (!pg) {
+		pg = '1'
+	}
 
-  const { hasPrevPage, hasNextPage, totalPages, page, nextPage, totalDocs } = response.data.result
-  
-  const pageData = {
-    hasPrevPage,
-    hasNextPage,
-    totalPages,
-    page,
-    nextPage: nextPage || null,
-    totalDocs
-  }
+	const response = await API.get(`/posts?page=${pg}`)
+	const postData = response.data.result.docs;
 
-  return {
-    props: {
-      postData,
-      pageData,
-    },
-  }
+	const { hasPrevPage, hasNextPage, totalPages, page, nextPage, totalDocs } = response.data.result
+
+	const pageData = {
+		hasPrevPage,
+		hasNextPage,
+		totalPages,
+		page,
+		nextPage: nextPage || null,
+		totalDocs
+	}
+
+	return {
+		props: {
+			postData,
+			pageData,
+		},
+	}
 }

@@ -1,6 +1,8 @@
-import { IContentProps } from '../../typescript/database'
 import ContentCard from '../ContentCard'
+
 import * as S from './styles'
+
+import { IContentProps } from '../../typescript/database'
 
 export default function Content({contentData}: IContentProps) {
     return (
