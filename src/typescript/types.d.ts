@@ -76,3 +76,15 @@ export interface IPostProps {
 export interface LoginFormProps {
     fetchUserData: (authorUsername: string) => void 
 }
+
+/* ================= Providers ================= */
+export interface AuthorDataProps {
+    children: ReactNode
+}
+
+export interface AuthorDataContext {
+    authorData: IAuthor
+    authorController: {
+        cleanUpdateData: (newData: any) => void
+    }
+}

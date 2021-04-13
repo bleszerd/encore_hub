@@ -25,7 +25,7 @@ export default function Post({ postData, authorData }: IPostProps) {
                     <AppWrapper>
                         <Header />
                         <PostSection author={postData.author} image={postData.image} title={postData.title} date={postData.date} content={postData.content} />
-                        <AuthorFooter bio={authorData.bio} birthday={authorData.birthday} fullName={authorData.fullName} photo={authorData.photo} username={authorData.username} social={authorData.social} __v={authorData.__v} _id={authorData._id} createdAt={authorData.createdAt} fullText={authorData.fullText} invite={authorData.invite} password={authorData.password} updatedAt={authorData.updatedAt} />
+                        <AuthorFooter  />
                         <Footer />
                     </AppWrapper>
                 )

@@ -16,23 +16,23 @@ export type IPost = {
 }
 
 export type IAuthor = {
-    social: {
+    social?: {
         twitter?: string
         instagram?: string
         github:? string
     }
-    _id: string
-    photo: string
-    username: string
-    password: string
-    invite: string
-    fullName: string
-    bio: string
-    fullText: string
-    birthday: string
-    createdAt: string
-    updatedAt: string
-    __v: string
+    _id?: string
+    photo?: string
+    username?: string
+    password?: string
+    invite?: string
+    fullName?: string
+    bio?: string
+    fullText?: string
+    birthday?: string
+    createdAt?: string
+    updatedAt?: string
+    __v?: string
 }
 
 export interface IPageNavigationProps {

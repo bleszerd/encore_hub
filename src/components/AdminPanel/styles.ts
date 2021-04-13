@@ -35,7 +35,6 @@ export const Today = styled.p`
 `
 
 export const InstantActions = styled.div`
-    background: rgba(0, 0, 0, .6);
     padding: 1rem;
     display: flex;
 `
@@ -105,4 +104,18 @@ export const InfoLabel = styled.p`
     b{
         font-weight: 700;
     }
+`
+
+export const InstantContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, .6);
+`
+
+export const LogoutLabel = styled.p`
+    padding-right: 1.3rem;
+    color: ${({ theme }) => theme.colors.white};
+    font-weight: 800;
 `

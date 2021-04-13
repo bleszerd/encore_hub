@@ -1,13 +1,13 @@
-import path from 'path'
 import { AppProps } from 'next/dist/next-server/lib/router/router'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from '../styles/themes.style'
 import { GlobalStyle } from '../styles/global.style'
+import AuthorDataProvider from '../context/AuthorData'
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <AuthorDataProvider>
       <Head>
         <title>Encore Hub</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <GlobalStyle />
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </AuthorDataProvider>
   )
 }
 

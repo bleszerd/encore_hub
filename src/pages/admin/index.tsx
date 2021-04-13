@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from '../../services/API'
 import Cookie from 'js-cookie'
 import { useRouter } from 'next/router'
+import { useAuthorData } from '../../context/AuthorData'
 
 import AppWrapper from "../../components/AppWrapper";
 import Header from "../../components/Header";
@@ -10,16 +11,16 @@ import LoginForm from "../../components/LoginForm";
 
 export default function Login() {
     const { push } = useRouter()
-    const [authorData, setAuthorData] = useState<any>() //Set to conext maybe?
+    const { authorData, authorController } = useAuthorData()
 
     useEffect(() => {
         const hasJwt = localStorage.getItem("@jwt")
         const hasCookie = Cookie.getJSON("@authorizedAuthor")
 
-        if(hasJwt && hasCookie){
+        if (hasJwt && hasCookie) {
             const authorFromCookie = Cookie.getJSON("@authorizedAuthor")
-            setAuthorData(authorFromCookie)
-    
+            authorController.cleanUpdateData(authorFromCookie)
+
             push(`/admin/panel`)
         } else {
             localStorage.removeItem("@jwt")
@@ -57,7 +58,3 @@ export default function Login() {
         </AppWrapper>
     )
 }
-
-// export const getServerSideProps = async () => {
-
-// }

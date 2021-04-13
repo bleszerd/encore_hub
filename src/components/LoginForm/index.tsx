@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import API from '../../services/API'
 import jwt from 'jsonwebtoken'
+import Cookie from 'js-cookie'
 
 import * as S from './styles'
 
@@ -16,8 +17,14 @@ export default function LoginForm({ fetchUserData }: LoginFormProps) {
         const jwtStored = localStorage.getItem("@jwt")
         const jwtKey = process.env.JWT_KEY
 
-        if (jwtStored && jwtKey && jwt.verify(jwtStored, jwtKey)) {
-            console.log("User logged!");
+        if (jwtStored && jwtKey) {
+            try {
+                jwt.verify(jwtStored, jwtKey)
+                console.log("User logged!");
+            } catch (err) {
+                localStorage.removeItem('@jwt')
+                Cookie.remove('@authorizedAuthor')
+            }
         }
     }, [])
 
