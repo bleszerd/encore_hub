@@ -8,4 +8,10 @@ export const ContentConatainer = styled.div`
     grid-row-gap: .6rem;
     grid-column-gap: .3rem;
     margin: -10rem auto 0 auto;
+
+    @media(max-width: 520px) {
+        width: 98%;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 1fr;
+    }
 `

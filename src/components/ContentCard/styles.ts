@@ -6,6 +6,10 @@ export const ContentCardContainer = styled.div`
     height: 20rem;
     cursor: pointer;
     border-radius: .5rem;
+
+    @media(max-width: 520px) {
+        width: 100%;
+    }
 `
 
 export const Image = styled.div<SImageProps>`

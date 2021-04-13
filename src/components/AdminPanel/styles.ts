@@ -7,6 +7,10 @@ export const AdminPanelContainer = styled.div`
     flex-direction: column;
     margin-top: -10rem;
     border-radius: .3rem .3rem 0 0;
+
+    @media(max-width: 520px) {
+        width: 98%;
+    }
 `
 
 export const Welcome = styled.section`
@@ -17,6 +21,10 @@ export const Welcome = styled.section`
     background: ${({ theme }) => theme.colors.purple};
     border-radius: .3rem .3rem 0 0;
     align-items: center;
+
+    @media(max-width: 520px) {
+        
+    }
 `
 
 export const AuthorWelcome = styled.h3`
@@ -26,6 +34,10 @@ export const AuthorWelcome = styled.h3`
 
     b {
         font-weight: 800;
+    }
+
+    @media(max-width: 520px) {
+        font-size: .8rem;
     }
 `
 
@@ -37,6 +49,11 @@ export const Today = styled.p`
 export const InstantActions = styled.div`
     padding: 1rem;
     display: flex;
+
+    @media(max-width: 520px) {
+        width: 100%;   
+        padding: 1rem .2rem;
+    }
 `
 
 export const InstantActionButton = styled.button`
@@ -47,12 +64,21 @@ export const InstantActionButton = styled.button`
     outline: none;
     color: ${({ theme }) => theme.colors.text};
     background: ${({ theme }) => theme.colors.sand};
+
+    @media(max-width: 520px) {
+        padding: .3rem .9rem;
+    }
 `
 
 export const ProfileInfo = styled.div`
     padding: 1rem;
     display: flex;
     background: ${({ theme }) => theme.colors.white};
+
+    @media(max-width: 520px) {
+        width: 100%;
+        justify-content: center;
+    }
 `
 
 export const ProfileImageUsername = styled.section`
@@ -69,6 +95,11 @@ export const ProfileData = styled.section`
 export const ProfileImage = styled.img`
     width: 12rem;
     border-radius: 20%;
+
+    @media(max-width: 520px) {
+        width: 80vw;
+        margin-bottom: 1rem;
+    }
 `
 
 export const AuthorName = styled.input`
@@ -94,6 +125,12 @@ export const AuthorName = styled.input`
         border-radius: .3rem;    
         color: ${({ theme }) => theme.colors.white};
     }
+
+    @media(max-width: 520px) {
+        border: solid rgba(0, 0, 0, .4) 1px;
+        border-radius: .3rem;
+        background: rgba(0, 0, 0, .2);
+    }
 `
 
 export const InfoLabel = styled.p`
@@ -118,4 +155,10 @@ export const LogoutLabel = styled.p`
     padding-right: 1.3rem;
     color: ${({ theme }) => theme.colors.white};
     font-weight: 800;
+
+    @media(max-width: 520px) {
+        position: absolute;
+        top: 1.25rem;
+        right: .75rem;
+    }
 `

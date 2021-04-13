@@ -16,6 +16,12 @@ export const LoginFormContainer = styled.form`
         border-radius: .3rem 0 0 .3rem;
         flex: 1;
     }
+
+    @media(max-width: 520px) {
+        width: 98vw;
+        height: auto;
+        padding: 1rem 0;
+    }
 `
 
 export const AuthorLogin = styled.p`
@@ -25,6 +31,10 @@ export const AuthorLogin = styled.p`
     font-weight: 600;
     color: ${({ theme }) => theme.colors.text};
     opacity: .8;
+
+    @media(max-width: 520px) {
+        width: 92%;
+    }
 `
 
 export const FullWideInput = styled.input`
@@ -39,6 +49,12 @@ export const FullWideInput = styled.input`
     padding: .2rem 1rem;
     flex: 1;
     color: ${({ theme }) => theme.colors.text};
+
+    @media(max-width: 520px) {
+        height: 2.6rem;
+        min-height: 2.6rem;
+        width: 92%;
+    }
 `
 
 export const MultipleColumnsDiv = styled.div`
@@ -47,6 +63,10 @@ export const MultipleColumnsDiv = styled.div`
     width: 80%;
     align-items: center;
     margin: 0 auto;
+
+    @media(max-width: 520px) {
+        width: 92%;
+    }
 `
 
 export const ButtonLogin = styled.button`
@@ -58,4 +78,8 @@ export const ButtonLogin = styled.button`
     color: ${({ theme }) => theme.colors.white};
     font-weight: 700;
     border-radius: 0 .3rem .3rem 0;
+
+    @media(max-width: 520px) {
+        flex: .4;
+    }
 `
