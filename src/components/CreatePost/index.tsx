@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useAuthorData } from '../../context/AuthorData'
 import PostSection from '../PostContainer'
 import API from '../../services/API'
@@ -11,9 +11,13 @@ export default function CreatePost() {
     const { authorData, authorController } = useAuthorData()
     const [tags, setTags] = useState([''])
     const [rawTag, setRawTag] = useState('')
-    const [postStr, setPostStr] = useState(localStorage.getItem('@post-backup') || '')
+    const [postStr, setPostStr] = useState('')
     const [postImage, setPostImage] = useState('')
     const [postTitle, setPostTitle] = useState('')
+
+    useEffect(()=>{
+        setPostStr(localStorage.getItem('@post-backup') || '')
+    }, [])
 
     function handleAndParseTags(e: ChangeEvent<HTMLInputElement>) {
         const rawTags = e.target.value
