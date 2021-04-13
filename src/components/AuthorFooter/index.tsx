@@ -1,16 +1,19 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { AuthorFooterProps } from '../../typescript/types'
 
 import * as S from './styles'
 
-export default function AuthorFooter({ authorData }: AuthorFooterProps) {
+export default function AuthorFooter({ authorData }: AuthorFooterProps | any) {
+    const { push } = useRouter()
+
     return (
         <S.AuthorFooterContainer>
             <S.AuthorImage src={authorData.photo} />
             <S.AuthorDetailsContainer>
-                <Link href={`/author/${authorData.username}`}>
-                    <S.AuthorName>{authorData.fullName}</S.AuthorName>
-                </Link>
+                <S.AuthorName onClick={() => push(`/authors/${authorData.username}`)}>
+                    {authorData.fullName}
+                </S.AuthorName>
                 <S.AuthorBio>{authorData.bio}</S.AuthorBio>
                 <S.SocialBar>
 

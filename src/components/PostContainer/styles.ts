@@ -7,13 +7,24 @@ export const PostContainer = styled.div`
     margin-top: -10rem;
     background: ${({theme}) => theme.colors.white};
     border-radius: .5rem .5rem 0 0;
+
+    @media(max-width: 520px) {
+        width: 98%;
+    }
 `
 export const PostHeader = styled.section`
-
+    @media(max-width: 520px) {
+        height: 20rem;
+    }
 `
 
 export const PostBody = styled.div`
     padding: 1rem 4rem;
+
+    @media(max-width: 520px) {
+        width: 100%;
+        padding: 1rem 0;
+    }
 `
 
 export const PostImage = styled.div<SPostImageProps>`
@@ -24,6 +35,10 @@ export const PostImage = styled.div<SPostImageProps>`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    @media(max-width: 520px) {
+        height: 20rem;
+    }
 `
 export const PostTitle = styled.h2`
     text-align: center;
@@ -37,6 +52,10 @@ export const PostMetadata = styled.p`
     font-size: .9rem;
     color: ${({ theme }) => theme.colors.text};
     font-weight: 300;
+
+    @media(max-width: 520px) {
+        text-align: center;
+    }
 `
 
 export const MetadataLink = styled.a`
@@ -48,4 +67,9 @@ export const MetadataLink = styled.a`
 export const Content = styled.section`
     margin: 2rem 0;
     text-align: justify;
+
+    @media(max-width: 520px) {
+        width: 95%;
+        margin: 2rem auto;
+    }
 `

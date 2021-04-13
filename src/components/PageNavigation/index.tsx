@@ -10,11 +10,15 @@ export default function PageNavigation(pageData: IPageNavigationProps) {
 
     let { page: actPage, totalPages } = pageData
 
+    // useEffect(()=>{
+    //     console.log(pageData);
+    // }, [])
+
     useEffect(() => {
         const pagesIterator: IPageNavigationItem[] = []
 
         if (actPage > totalPages) {
-            push(`/`)
+            push(`/?page=2`)
         }
 
         for (let i = actPage - 2; i < actPage + 3; i++) {
@@ -42,12 +46,9 @@ export default function PageNavigation(pageData: IPageNavigationProps) {
 
     function handlePage(urlToGo: string) {
         push(urlToGo)
-    }
+    }    
 
-    console.log(totalPages);
-    
-
-    if(totalPages == 0){
+    if(totalPages === 0){
         return <div style={{height: '10rem', width: '1px'}}></div>
     }
 

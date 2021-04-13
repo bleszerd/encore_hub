@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import AuthorContent from "../../components/AuthorContent";
 import API from "../../services/API";
-import { GetStaticProps, GetStaticPropsContext } from "next";
+import { GetStaticPropsContext } from "next";
 import { AuthorProps } from "../../typescript/types";
 
 export default function Author({ authorData }: AuthorProps) {

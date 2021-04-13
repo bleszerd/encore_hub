@@ -27,8 +27,8 @@ export default function Home({ postData, pageData }: IHomeProps) {
 	)
 }
 
-export const getServerSideProps = async ({ query }: GetServerSidePropsContext) => {
-	let { pg } = query
+export async function getServerSideProps({ query }: GetServerSidePropsContext) {
+	let { page: pg } = query
 
 	if (!pg) {
 		pg = '1'

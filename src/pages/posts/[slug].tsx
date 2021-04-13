@@ -55,11 +55,12 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
         return {
             props: {
                 postData,
-                authorData
+                authorData,
+                revalidate: 1800
             }
         }
     } catch (err) {
-        console.log('a');
+        console.log(err);
     }
 
 }

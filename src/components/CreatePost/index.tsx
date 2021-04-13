@@ -6,6 +6,7 @@ import API from '../../services/API'
 import * as S from './styles'
 
 import { MouseEvent } from 'react'
+import { useRouter } from 'next/router'
 
 export default function CreatePost() {
     const { authorData, authorController } = useAuthorData()
@@ -14,6 +15,7 @@ export default function CreatePost() {
     const [postStr, setPostStr] = useState('')
     const [postImage, setPostImage] = useState('')
     const [postTitle, setPostTitle] = useState('')
+    const {push} = useRouter()
 
     useEffect(()=>{
         setPostStr(localStorage.getItem('@post-backup') || '')
@@ -30,13 +32,15 @@ export default function CreatePost() {
     }
 
     async function handleSubmitPost(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) {
+        e.preventDefault()
         const jwtStored = localStorage.getItem("@jwt")
+
         if(!jwtStored){
             return
         }
 
         const postRequestBody = {
-            title: postStr,
+            title: postTitle,
             tags,
             slug: postTitle.replaceAll(" ", "_").replaceAll("?", "_").replaceAll(".", "_"),
             image: postImage,
@@ -51,12 +55,13 @@ export default function CreatePost() {
             }
         })
 
-        if(response.data.result._id){
+        if(response.data.result){
             alert("Post criado!")
             return
         }
 
-        alert("Falha ao criar o post!")
+        alert("Falha ao criar o post! Tente novamente após o login!")
+        push(`/admin`)
     }
 
     function handlePostText(e: ChangeEvent<HTMLTextAreaElement>){
