@@ -1,24 +1,26 @@
 import { useRouter } from 'next/router'
-import Cookie from 'js-cookie'
 import { useAuthorData } from '../../context/AuthorData'
+import {handleAuthLogout, retrieveData} from '../../utils/auth'
 
 import * as S from './styles'
 import { useEffect } from 'react'
 
 export default function AdminPanel() {
-    const { authorData } = useAuthorData()
+    const { authorData, authorController } = useAuthorData()
     const { push } = useRouter()
 
     useEffect(() => {
-        if(!authorData.username){
+        const {localAuthorData} = retrieveData()
+
+        if(!localAuthorData){
             push(`/admin`)
         }
-        // transfere this logic to authorData context
-    }, [authorData])
+
+        authorController.cleanUpdateData(localAuthorData)
+    }, [])
 
     function handleLogout() {
-        localStorage.removeItem("@jwt")
-        Cookie.remove("@authorizedAuthor")
+        handleAuthLogout()
         push(`/admin`)
     }
 
