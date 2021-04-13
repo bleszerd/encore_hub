@@ -25,7 +25,8 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
         return {
             props: {
                 authorData: authorData.data.result
-            }
+            },
+            revalidate: 1800 //30 min
         }
 
     }
