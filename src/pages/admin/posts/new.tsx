@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useAuthorData } from '../../../context/AuthorData'
 import { useEffect } from "react";
+import {retrieveData} from '../../../utils/auth'
 
 import AppWrapper from "../../../components/AppWrapper";
 import Header from "../../../components/Header";
@@ -12,7 +13,9 @@ export default function NewPost(){
     const { authorData, authorController } = useAuthorData()
 
     useEffect(() => {
-        if(!authorData.username){
+        const {localAuthorData, localJwt} = retrieveData()
+
+        if(!localAuthorData){
             push(`/admin`)
         }
     }, [authorData])
