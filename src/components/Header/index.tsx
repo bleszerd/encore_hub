@@ -1,7 +1,10 @@
 import * as S from './styles'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-export default function Header(){
+export default function Header() {
+    const {  push } = useRouter()
+
     return (
         <S.HeaderContainer>
             <S.LogoSection>
@@ -11,8 +14,8 @@ export default function Header(){
             </S.LogoSection>
 
             <S.NavigationSection>
-                <S.NavigationButton>Sobre</S.NavigationButton>
-                <S.NavigationButton>Autores</S.NavigationButton>
+                <S.NavigationButton onClick={() => push(`/about`)}>Sobre</S.NavigationButton>
+                <S.NavigationButton onClick={() => push(`/authors`)}>Autores</S.NavigationButton>
             </S.NavigationSection>
         </S.HeaderContainer>
     )

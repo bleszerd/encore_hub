@@ -11,7 +11,7 @@ export default function CreatePost() {
     const { authorData, authorController } = useAuthorData()
     const [tags, setTags] = useState([''])
     const [rawTag, setRawTag] = useState('')
-    const [postStr, setPostStr] = useState('')
+    const [postStr, setPostStr] = useState(localStorage.getItem('@post-backup') || '')
     const [postImage, setPostImage] = useState('')
     const [postTitle, setPostTitle] = useState('')
 
@@ -55,6 +55,11 @@ export default function CreatePost() {
         alert("Falha ao criar o post!")
     }
 
+    function handlePostText(e: ChangeEvent<HTMLTextAreaElement>){
+        setPostStr(e.target.value)
+        localStorage.setItem("@post-backup", e.target.value)
+    }
+
     return (
         <S.CreatePostContainer>
             <S.TitleImageContainer>
@@ -69,7 +74,7 @@ export default function CreatePost() {
                 }
             </S.TagSection>
 
-            <S.PostTextInput placeholder="Publicação com markdown" onChange={e => setPostStr(e.target.value)} />
+            <S.PostTextInput placeholder="Publicação com markdown" defaultValue={postStr} onChange={e => handlePostText(e)} />
 
             <S.PostPreview>
                 <PostSection

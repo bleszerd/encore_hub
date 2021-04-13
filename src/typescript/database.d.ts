@@ -20,6 +20,7 @@ export type IAuthor = {
         twitter?: string
         instagram?: string
         github:? string
+        linkedin:? string
     }
     _id?: string
     photo?: string

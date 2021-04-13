@@ -24,6 +24,7 @@ export const NavigationSection = styled.section`
 
 export const NavigationButton = styled.button`
     margin: 0 0 0 1rem;
+    cursor: pointer;
     font-size: 1rem;
     background: none;
     border: none;

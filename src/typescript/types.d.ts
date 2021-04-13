@@ -74,7 +74,7 @@ export interface IPostProps {
 
 /* ================= Login Form ================= */
 export interface LoginFormProps {
-    fetchUserData: (authorUsername: string) => void 
+    fetchUserData: (authorUsername: string) => void
 }
 
 /* ================= Providers ================= */
@@ -87,4 +87,28 @@ export interface AuthorDataContext {
     authorController: {
         cleanUpdateData: (newData: any) => void
     }
+}
+
+/* ================= Providers ================= */
+export interface AuthorFooterProps {
+    authorData: {
+        photo: string
+        fullName: string
+        bio: string
+        social: {
+            twitter?: string
+            instagram?: string
+            github?: string
+            linkedin?: string
+        }
+        username: string
+    }
+}
+
+export interface SAuthorName {
+    side: string
+}
+
+export interface AuthorProps {
+    authorData: IAuthor
 }

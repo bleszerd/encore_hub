@@ -7,9 +7,10 @@ import PostSection from '../../components/PostContainer'
 import API from '../../services/API'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { IPostProps } from '../../typescript/types'
+import { IPost } from '../../typescript/database'
+import AuthorData from '../../context/AuthorData'
 
-export default function Post({ postData, authorData }: IPostProps) {
+export default function Post({ postData, authorData }: any) {
     const { push } = useRouter()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function Post({ postData, authorData }: IPostProps) {
                     <AppWrapper>
                         <Header />
                         <PostSection author={postData.author} image={postData.image} title={postData.title} date={postData.date} content={postData.content} />
-                        <AuthorFooter  />
+                        {!!AuthorData && <AuthorFooter authorData={authorData} />}
                         <Footer />
                     </AppWrapper>
                 )
@@ -42,26 +43,23 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-    if (!params) {
+    try {
+        const slug = params?.slug
+
+        const response = await API.get(`/posts/${slug}`)
+        const postData = await response.data.result || null;
+
+        const authorResponse = await API.get(`/authors/${postData.author}`)
+        const authorData = await authorResponse.data.result || null;
+
         return {
             props: {
-                postData: null
+                postData,
+                authorData
             }
         }
+    } catch (err) {
+        console.log('a');
     }
 
-    const slug = params.slug
-
-    const response = await API.get(`/posts/${slug}`)
-    const postData = response.data.result || null;
-
-    const authorResponse = await API.get(`/authors/${postData.author}`)
-    const authorData = authorResponse.data.result || null;
-
-    return {
-        props: {
-            postData,
-            authorData
-        }
-    }
 }
