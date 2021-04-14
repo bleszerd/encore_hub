@@ -87,11 +87,9 @@ export const Content = styled.section`
     }
 
     small {
-        @media(max-width: 520px) {
-            padding: 0 0 1rem 0;
-            display: block;
-            font-weight: 300;
-        }
+        margin-bottom: 1rem;
+        display: block;
+        font-weight: 300;
     }
     
     h2 {

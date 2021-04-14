@@ -24,12 +24,26 @@ export const Image = styled.div<SImageProps>`
 
 export const CardHeaderSection = styled.section`
     display: flex;
-    height: 75%;
+    flex-wrap: wrap;
+    overflow: auto;
+    text-overflow: ellipsis;
+    scrollbar-width: thin;
+    scrollbar-color: ${({theme}) => theme.colors.sand};
+
+    ::-webkit-scrollbar {
+        width: .2rem;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: ${({theme}) => theme.colors.sand} ;
+        border-radius: 6px;
+    }
 `
 
 export const CardAuthorSection = styled.section`
     display: flex;
-    height: 25%;
+    height: 20%;
     align-items: flex-end;
     justify-content: flex-end;
 `
