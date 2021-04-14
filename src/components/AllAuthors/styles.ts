@@ -37,7 +37,7 @@ export const AuthorNamePhoto = styled.div`
     display: flex;
 
     @media(max-width: 520px) {
-
+        margin-bottom: 7rem;
     }
 `
 
@@ -59,6 +59,9 @@ export const AuthorName = styled.p<SAuthorName>`
     padding: 0 1rem;
     text-align: ${({ side }) => side == "left" ? "start" : "end"};
     cursor: pointer;
+
+    @media(max-width: 520px) {
+    }
 `
 
 export const AuthorUsername = styled.p<SAuthorName>`
@@ -70,10 +73,6 @@ export const AuthorUsername = styled.p<SAuthorName>`
     color: ${({ theme }) => theme.colors.text};
     opacity: .4;
     font-weight: 600;
-
-    @media(max-width: 520px) {
-        
-    }
 `
 
 export const AuthorInfo = styled.div`
@@ -91,7 +90,6 @@ export const AuthorBio = styled.p`
 
     @media(max-width: 520px) {
         margin: 0 .2rem 0 .6rem;
-        text-align: right;
     }
 `
 

@@ -21,6 +21,7 @@ export async function getStaticProps(){
     return {
         props: {
             authors: authors
-        }
+        },
+        revalidate: 3600
     }
 }
