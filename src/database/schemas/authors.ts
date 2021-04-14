@@ -19,6 +19,7 @@ const AuthorsSchema = new mongoose.Schema({
     invite: {
         type: String,
         required: true,
+        unique: false
     },
     fullName: {
         type: String,
