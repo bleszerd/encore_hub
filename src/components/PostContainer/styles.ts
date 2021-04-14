@@ -5,7 +5,7 @@ export const PostContainer = styled.div`
     width: 58vw;
     margin: 0 auto -2rem auto;
     margin-top: -10rem;
-    background: ${({theme}) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.white};
     border-radius: .5rem .5rem 0 0;
 
     @media(max-width: 520px) {
@@ -31,7 +31,7 @@ export const PostImage = styled.div<SPostImageProps>`
     width: 100%;
     border-radius: .5rem .5rem 0 0;
     height: 25rem;
-    background-image: url(${({src}) => src});
+    background-image: url(${({ src }) => src});
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -67,6 +67,37 @@ export const MetadataLink = styled.a`
 export const Content = styled.section`
     margin: 2rem 0;
     text-align: justify;
+
+    img {
+        background: rgba(0, 0, 0, .6);
+        width: calc(100% + 8rem);
+        margin: 2rem 0 0 -4rem;
+        max-height: 35rem;
+
+        @media(max-width: 520px) {
+            margin: 1.2rem 0 0 -.5rem;
+            width: calc(100vw - .5rem);
+        }
+    }
+
+    li {
+        @media(max-width: 520px) {
+            margin: 0 0 0 1rem;
+        }
+    }
+
+    small {
+        @media(max-width: 520px) {
+            padding: 0 0 1rem 0;
+            display: block;
+            font-weight: 300;
+        }
+    }
+    
+    h2 {
+        width: 80%;
+        text-align: left;
+    }
 
     @media(max-width: 520px) {
         width: 95%;

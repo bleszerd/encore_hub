@@ -62,7 +62,7 @@ export const AuthorLink = styled.a`
 export const ImageEffect = styled.div`
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .2);
     border-radius: .5rem;
     z-index: 25;
 `
