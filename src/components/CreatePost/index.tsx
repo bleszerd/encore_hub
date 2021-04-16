@@ -42,7 +42,7 @@ export default function CreatePost() {
         const postRequestBody = {
             title: postTitle,
             tags,
-            slug: postTitle.replaceAll(" ", "_").replaceAll("?", "_").replaceAll(".", "_"),
+            slug: postTitle.replaceAll(/([^a-zA-Z]+)/g, "_"),
             image: postImage,
             author: authorData.username,
             date: new Date().toLocaleString("pt-BR"),

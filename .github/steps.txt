@@ -1,0 +1,4 @@
+1 - Definir resumidamente as funções blog
+2 - Definir as tecnologias a serem utilizadas
+3 - Markdown, HTML ou outra tecnologia para escrever os posts?
+4 - Organização Inicial

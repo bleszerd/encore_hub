@@ -71,6 +71,7 @@ export const Content = styled.section`
     img {
         background: rgba(0, 0, 0, .6);
         width: calc(100% + 8rem);
+        max-width: calc(100% + 8rem);
         margin: 2rem 0 0 -4rem;
         max-height: 35rem;
 
