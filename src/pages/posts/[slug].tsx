@@ -25,8 +25,15 @@ export default function Post({ postData, authorData }: any) {
                 postData && (
                     <AppWrapper>
                         <Header />
-                        <PostSection author={postData.author} image={postData.image} title={postData.title} date={postData.date} content={postData.content} />
-                        {!!AuthorData && <AuthorFooter authorData={authorData} />}
+                        {
+                            !!AuthorData && (
+                                <>
+                                    <PostSection author={postData.author} image={postData.image} title={postData.title} date={postData.date} content={postData.content} />
+                                    <AuthorFooter authorData={authorData} />
+                                </>
+                            )
+                        }
+
                         <Footer />
                     </AppWrapper>
                 )
@@ -42,25 +49,20 @@ export const getStaticPaths = async () => {
     }
 }
 
-export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-    try {
-        const slug = params?.slug
+export async function getStaticProps({ params }: GetStaticPropsContext) {
+    const slug = params?.slug
 
-        const response = await API.get(`/posts/${slug}`)
-        const postData = await response.data.result || null;
+    const response = await API.get(`/posts/${slug}`)
+    const postData = await response.data.result || null;
 
-        const authorResponse = await API.get(`/authors/${postData.author}`)
-        const authorData = await authorResponse.data.result || null;
+    const authorResponse = await API.get(`/authors/${postData.author}`)
+    const authorData = await authorResponse.data.result || null;
 
-        return {
-            props: {
-                postData,
-                authorData,
-                revalidate: 1800
-            }
+    return {
+        props: {
+            postData,
+            authorData,
+            revalidate: 1800
         }
-    } catch (err) {
-        console.log(err);
     }
-
 }

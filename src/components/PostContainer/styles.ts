@@ -94,8 +94,7 @@ export const Content = styled.section`
     }
     
     h2 {
-        width: 80%;
-        text-align: left;
+        margin: 1rem 0;
     }
 
     @media(max-width: 520px) {

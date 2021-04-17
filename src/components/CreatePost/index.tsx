@@ -82,6 +82,7 @@ export default function CreatePost() {
                     ))
                 }
             </S.TagSection>
+            <p>⠀</p>
 
             <S.PostTextInput placeholder="Publicação com markdown" defaultValue={postStr} onChange={e => handlePostText(e)} />
 

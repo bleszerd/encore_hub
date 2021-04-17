@@ -8,6 +8,9 @@ if(!baseURL){
 
 const API = axios.create({
     baseURL,
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    }
 })
 
 export default API
