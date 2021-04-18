@@ -2,7 +2,9 @@ import { useRouter } from 'next/router'
 import { ContentCardProps } from '../../typescript/types'
 import * as S from './styles'
 
-export default function ContentCard({ author, date, title, image, slug }: ContentCardProps) {
+export default function ContentCard({ contentCard }: ContentCardProps) {
+    const {author, date, image, slug, title} = contentCard
+    
     const router = useRouter()
 
     function navigateToPostPage(){
@@ -10,7 +12,7 @@ export default function ContentCard({ author, date, title, image, slug }: Conten
     }
 
     return (
-        <S.ContentCardContainer onClick={navigateToPostPage} key={slug}>
+        <S.ContentCardContainer onClick={navigateToPostPage}>
             <S.Image src={image}>
                 <S.ImageEffect>
                     <S.CardDetails>

@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useAuthorData } from '../../context/AuthorData'
 import PostSection from '../PostContainer'
 import API from '../../services/API'
+import {handleAuthLogout, retrieveData} from '../../utils/auth'
+import {generateSlug, generatePostDate} from '../../utils/posts'
 
 import * as S from './styles'
 
@@ -15,70 +17,139 @@ export default function CreatePost() {
     const [postStr, setPostStr] = useState('')
     const [postImage, setPostImage] = useState('')
     const [postTitle, setPostTitle] = useState('')
-    const {push} = useRouter()
+    const [channel, setChannel] = useState<"select" | "development" | "production">("select")
+
+    const { push } = useRouter()
 
     useEffect(()=>{
-        setPostStr(localStorage.getItem('@post-backup') || '')
+        console.log(authorData);
+    }, [authorData])
+
+    /* Fetch local backup data */
+    useEffect(() => {  
+        const localBackup = localStorage.getItem('@post-backup')
+
+        if (localBackup) {
+            const localParsedBackup = JSON.parse(localBackup)
+
+            const { postTitle, postImage, tags, postStr, channel } = localParsedBackup
+
+            setPostTitle(postTitle)
+            setPostImage(postImage)
+            setTags(tags)
+            setPostStr(postStr)
+            setChannel(channel)
+        }
     }, [])
 
-    function handleAndParseTags(e: ChangeEvent<HTMLInputElement>) {
-        const rawTags = e.target.value
-        setRawTag(rawTags)
-
-        if (rawTags.indexOf(";") != -1) {
-            setTags([...tags, rawTags.slice(0, rawTags.length - 1)])
-            setRawTag('')
+    function sendError(type: "generic" | "session"){
+        const errors = {
+            generic: () => {
+                alert("Sua sessão expirou, por favor faça login novamente.")
+                handleAuthLogout()
+                push(`/admin`)
+            },
+            session: () => {
+                alert("Ocorreu um erro, verifique se todos os campos foram preenchidos ou tente novamente mais tarde.")
+            }
         }
+
+        errors[type]
     }
 
     async function handleSubmitPost(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) {
         e.preventDefault()
-        const jwtStored = localStorage.getItem("@jwt")
 
-        if(!jwtStored){
-            return
+        const {localJwt} = retrieveData()
+
+        if (!localJwt) {
+            sendError("session")
         }
 
         const postRequestBody = {
             title: postTitle,
-            tags,
-            slug: postTitle.replaceAll(/([^a-zA-Z]+)/g, "_"),
+            tags: tags,
+            slug: generateSlug(postTitle),
             image: postImage,
             author: authorData.username,
-            date: new Date().toLocaleString("pt-BR"),
+            date: generatePostDate(),
             content: postStr
         }
 
         const response = await API.post(`/posts/create`, postRequestBody, {
             headers: {
-                authorization: jwtStored
+                authorization: localJwt
             }
         })
 
-        if(response.data.result){
+        if (response.data.result) {
             alert("Post criado!")
             return
         }
 
-        alert("Falha ao criar o post! Tente novamente após o login!")
-        push(`/admin`)
+        sendError("session")
     }
 
-    function handlePostText(e: ChangeEvent<HTMLTextAreaElement>){
+    /* Update methods */
+    function handleAndParseTags(e: ChangeEvent<HTMLInputElement>) {
+        const rawTags = e.target.value
+        setRawTag(rawTags)
+
+        if (rawTags.indexOf(";") != -1) {
+            const newTags = [...tags, rawTags.slice(0, rawTags.length - 1)]
+            setTags(newTags)
+            setRawTag('')
+        }
+    }
+
+    function handlePostText(e: ChangeEvent<HTMLTextAreaElement>) {
         setPostStr(e.target.value)
-        localStorage.setItem("@post-backup", e.target.value)
+        updateLocalBackup()
+    }
+
+    function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {
+        setPostTitle(e.target.value)
+        updateLocalBackup()
+    }
+
+    function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
+        setPostImage(e.target.value)
+        updateLocalBackup()
+    }
+
+    function handleChannel(e: ChangeEvent<HTMLSelectElement>) {
+        const channelSelected = e.target.value
+
+        if (channelSelected != "development" && channelSelected != "production" && channelSelected != "select") {
+            return
+        }
+
+        setChannel(channelSelected)
+        updateLocalBackup()
+    }
+
+    function updateLocalBackup() {
+        const stringfiedData = JSON.stringify({
+            postTitle,
+            postImage,
+            tags,
+            postStr,
+            channel
+        })
+
+        localStorage.setItem("@post-backup", stringfiedData)
     }
 
     return (
         <S.CreatePostContainer>
             <S.TitleImageContainer>
-                <S.TitleInput placeholder="Título da publicação" onChange={e => setPostTitle(e.target.value)} />
-                <S.TitleInput placeholder="Url da imagem" onChange={e => setPostImage(e.target.value)} />
+                <S.TitleInput placeholder="Título da publicação" defaultValue={postTitle} onChange={e => handleTitleChange(e)} />
+                <S.TitleInput placeholder="Url da imagem" defaultValue={postImage} onChange={e => handleImageChange(e)} />
             </S.TitleImageContainer>
             <S.TagSection>
                 {
                     tags.map(tag => (
-                        <S.TagLabel key="tag" placeholder="TAG" value={tag || rawTag} onChange={e => handleAndParseTags(e)} />
+                        <S.TagLabel key="tag" placeholder="TAG" value={tag || rawTag} defaultValue={tags} onChange={e => handleAndParseTags(e)} />
                     ))
                 }
             </S.TagSection>
@@ -97,10 +168,10 @@ export default function CreatePost() {
             </S.PostPreview>
 
             <S.PublishChannelContainer>
-                <S.ChannelSelector>
-                    <S.PublishChannelOption value="" hidden>Selecionar canal</S.PublishChannelOption>
-                    <S.PublishChannelOption value="producao">Produção</S.PublishChannelOption>
-                    <S.PublishChannelOption value="desenvolvimento">Desenvolvimento</S.PublishChannelOption>
+                <S.ChannelSelector onChange={e => handleChannel(e)}>
+                    <S.PublishChannelOption value="select" hidden>Selecionar canal</S.PublishChannelOption>
+                    <S.PublishChannelOption value="production">Desenvolvimento</S.PublishChannelOption>
+                    <S.PublishChannelOption value="development">Produção</S.PublishChannelOption>
                 </S.ChannelSelector>
                 <S.PublishButton onClick={e => handleSubmitPost(e)}>Enviar</S.PublishButton>
             </S.PublishChannelContainer>

@@ -9,9 +9,9 @@ export function retrieveData() {
     const localJwt = localStorage.getItem("@jwt")
     const localAuthorData = Cookie.getJSON("@authorizedAuthor")
 
+    
     if (!localJwt || !localAuthorData) {
         handleAuthLogout()
-
         return {}
     }
 

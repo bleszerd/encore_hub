@@ -8,19 +8,15 @@ import { IHomeProps } from '../typescript/database'
 import { GetServerSidePropsContext } from 'next'
 
 export default function Home({ postData, pageData }: IHomeProps) {
-	const { hasNextPage, hasPrevPage, nextPage, page, totalDocs, totalPages } = pageData
 
 	return (
 		<AppWrapper>
 			<Header />
-			<Content contentData={postData} />
+			<Content
+				contentData={postData}
+			/>
 			<PageNavigation
-				hasNextPage={hasNextPage}
-				hasPrevPage={hasPrevPage}
-				nextPage={nextPage}
-				page={page}
-				totalPages={totalPages}
-				totalDocs={totalDocs}
+				pageData={pageData}
 			/>
 			<Footer />
 		</AppWrapper>
@@ -28,13 +24,10 @@ export default function Home({ postData, pageData }: IHomeProps) {
 }
 
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-	let { page: pg } = query
+	const { page: pageQuery } = query
+	let pageToFetch = pageQuery || "1"
 
-	if (!pg) {
-		pg = '1'
-	}
-
-	const response = await API.get(`/posts?page=${pg}`)
+	const response = await API.get(`/posts?page=${pageToFetch}`)
 	const postData = response.data.result.docs;
 
 	const { hasPrevPage, hasNextPage, totalPages, page, nextPage, totalDocs } = response.data.result

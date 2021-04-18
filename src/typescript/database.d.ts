@@ -37,6 +37,10 @@ export type IAuthor = {
 }
 
 export interface IPageNavigationProps {
+    pageData: IPageData
+}
+
+export interface IPageData {
     hasPrevPage: boolean
     hasNextPage: boolean
     totalPages: number
@@ -47,7 +51,7 @@ export interface IPageNavigationProps {
 
 export interface IHomeProps {
     postData: IPost[]
-    pageData: IPageNavigationProps
+    pageData: IPageData
 }
 
 export interface IPageNavigationItem {

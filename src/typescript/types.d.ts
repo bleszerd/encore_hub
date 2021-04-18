@@ -37,7 +37,9 @@ export interface SImageProps {
     src: string
 }
 
-export type ContentCardProps = ContentCard
+export interface ContentCardProps {
+    contentCard: ContentCard
+}
 
 /* ================= Post ================= */
 export interface PostSectionProps {

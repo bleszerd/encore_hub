@@ -2,28 +2,28 @@ import { useEffect, useState } from 'react'
 import API from '../../services/API'
 import jwt from 'jsonwebtoken'
 import Cookie from 'js-cookie'
+import {retrieveData, handleAuthLogout} from '../../utils/auth'
 
 import * as S from './styles'
 
 import { MouseEvent } from 'react'
-import { LoginFormProps } from '../../typescript/types'
+import { useRouter } from 'next/router'
 
-export default function LoginForm({ fetchUserData }: LoginFormProps) {
+export default function LoginForm() {
+    const { push } = useRouter()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     //Verify JWT token on local storage
     useEffect(() => {
-        const jwtStored = localStorage.getItem("@jwt")
         const jwtKey = process.env.JWT_KEY
+        const {localAuthorData, localJwt} = retrieveData()
 
-        if (jwtStored && jwtKey) {
+        if (localJwt && jwtKey) {
             try {
-                jwt.verify(jwtStored, jwtKey)
-                console.log("User logged!");
+                jwt.verify(localJwt, jwtKey)
             } catch (err) {
-                localStorage.removeItem('@jwt')
-                Cookie.remove('@authorizedAuthor')
+                handleAuthLogout()
             }
         }
     }, [])
@@ -46,6 +46,29 @@ export default function LoginForm({ fetchUserData }: LoginFormProps) {
             localStorage.setItem("@jwt", jwt)
             fetchUserData(username)
         }
+    }
+
+    async function fetchUserData(authorUsername: string) {
+        const authorResponse = await API.get(`/authors/${authorUsername}`)
+
+        const { bio, birthday, fullName, fullText, photo, social, username } = authorResponse.data.result
+
+        const authorToCookie = {
+            fullName,
+            username,
+            photo,
+            bio,
+            birthday,
+            social,
+            fullText
+        }
+
+        Cookie.set("@authorizedAuthor", JSON.stringify(authorToCookie), {
+            expires: 7200, //2h
+            sameSite: 'strict'
+        })
+
+        push(`/admin/panel`)
     }
 
     return (

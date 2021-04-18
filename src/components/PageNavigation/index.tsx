@@ -4,15 +4,11 @@ import * as S from './styles'
 import { useEffect, useState } from 'react'
 import { BsCaretLeftFill, BsCaretRightFill, BsCaretRight, BsCaretLeft } from 'react-icons/bs'
 
-export default function PageNavigation(pageData: IPageNavigationProps) {
+export default function PageNavigation({pageData}: IPageNavigationProps) {
     const [pagesArray, setPagesArray] = useState<IPageNavigationItem[]>([])
     const { push } = useRouter()
 
     let { page: actPage, totalPages } = pageData
-
-    // useEffect(()=>{
-    //     console.log(pageData);
-    // }, [])
 
     useEffect(() => {
         const pagesIterator: IPageNavigationItem[] = []
